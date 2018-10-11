@@ -1,2 +1,2 @@
 # ds_sem2
-This is c++ application mainly based on data structures
+This is a c++ application mainly based on data structures
