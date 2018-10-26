@@ -40,7 +40,7 @@ int main(){
         list<string>tl=*itr;
         list<string>::iterator it;
         for(it=tl.begin();it!=tl.end();it++){
-            cout<<*it<<"->";
+            cout<<*it<<" ";
         }
         cout<<endl;
     }
