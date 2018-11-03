@@ -3,8 +3,8 @@
 #### compiler build using C++
 
 ### Prerequisites
-- install [codeblocks](http://www.codeblocks.org/downloads)
-- read [SETUP.md](https://github.com/namanvashistha/hyperbole/blob/master/setup.md) file to setup the database
+- Install [Code::Blocks](http://www.codeblocks.org/downloads)
+- Open files in [Code::Blocks](http://www.codeblocks.org/downloads) and start contributing
 
 ## Contributing
 
