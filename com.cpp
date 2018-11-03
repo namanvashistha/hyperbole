@@ -1,7 +1,7 @@
 #include <iostream>
-
 #include <string>
 #include <list>
+#include"variable.h"
 using namespace std;
 
 int main()
