@@ -7,15 +7,16 @@ using namespace std;
 
 class variable{
     public:
-        bool set_value(map<string,string> &variables, string &key,string &value);
-        string get_value(map<string,string>&variables, string key);
+        map<string,string> variables;
+        bool set_value(string &key,string &value);
+        string get_value(string key);
 };
 
-bool variable::set_value(map<string,string> &variables, string &key,string &value){
+bool variable::set_value(string &key,string &value){
     variables.insert({key,value});
 }
 
-string variable::get_value(map<string,string> &variables, string key){
+string variable::get_value(string key){
     map<string,string>::iterator it;
     int p=0;
     for(it=variables.begin();it!=variables.end();it++){

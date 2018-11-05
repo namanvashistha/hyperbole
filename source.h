@@ -8,14 +8,23 @@ using namespace std;
 
 class source{
     public:
-        bool open(string filename ,list<list<string>> &lol);
-        bool show(list<list<string>> &lol);
+        list<list<string>> lol;
+        bool new_file(string filename);
+        bool open_file(string filename);
+        bool show_file();
 
 };
+bool source::new_file(string filename){
+    ofstream file;
+    file.open("source/"+filename+".txt");
+    cout<<"please go to source/"<<filename<<".txt and write the code in hyperbole\n";
+    return true;
+}
 
-bool source::open(string filename ,list<list<string>> &lol){
+bool source::open_file(string filename){
     fstream file;
-    file.open("code.txt");
+    file.open("source/"+filename+".txt");
+    if(file.fail()) return false;
     string s="";
     while(file){
         string p;
@@ -42,7 +51,7 @@ bool source::open(string filename ,list<list<string>> &lol){
     return true;
 }
 
-bool source::show(list<list<string>> &lol){
+bool source::show_file(){
     list<list<string>>::iterator itr;
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;

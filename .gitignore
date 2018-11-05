@@ -17,6 +17,6 @@
 *.exe
 *.out
 *.app
-*.txt
+#*source/.txt
 *.
 *
