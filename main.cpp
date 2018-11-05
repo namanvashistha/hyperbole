@@ -6,24 +6,28 @@
 using namespace std;
 int main(){
     BEGIN: system("clear");
-    cout<<"Choose an option\n\t\t\t1.New 2.Open"<<endl;
     cout<<"Enter the name of file"<<endl;
 
     source src;
     variable var;
     char flow='r';
-    string filename;
-    cin>>filename;
-    system("clear");
-    cout<<filename<<endl;
-    while(flow=='r' || flow=='R'){
-        if(!src.open_file(filename)){
-            src.new_file(filename);
+    cin>>src.filename;
+    while(1){
+        if(!src.open_file()){
+            src.new_file();
         }
+        system("clear");
+        cout<<src.filename<<"\n\n";
+        cout<<"please go to source/"<<src.filename<<".txt and write the code in hyperbole\n\n\n";
+        for(int i=0;i<50;i++) cout<<"`"; cout<<endl;
         src.show_file();
-        cout<<"Press 'R' to Refresh and 'Q' to close this file "<<endl;
+        cout<<endl;
+        for(int i=0;i<50;i++) cout<<"`";
+        cout<<"\n\nPress 'R' to Refresh,'C' to Compile and 'Q' to close this file ";
         cin>>flow;
-        if(flow=='q' || flow=='Q') goto BEGIN;
-
+        if(flow=='q' || flow=='Q'){
+            goto BEGIN;
+        }
+        src.close_file();
     }
 }

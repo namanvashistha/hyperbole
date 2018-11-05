@@ -1,0 +1,2 @@
+display: displays the variable or the string;
+fetch: takes the input from the keyboard and stores it into a variable;

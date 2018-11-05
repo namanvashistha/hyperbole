@@ -5,7 +5,9 @@
 class help
 {
     public:
-        help() {}
+        help() {
+        	cout<<"helping";
+        }
 
 };
 
