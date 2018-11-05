@@ -1,23 +1,34 @@
-#include <string.h>
+#ifndef VARIABLE_H
+#define VARIABLE_H
+#include<string.h>
 #include<map>
+#include<iostream>
 using namespace std;
-string search(map<string,string>&keywords, string key)
-{
-	map<string,string>::iterator it;
-	int p=0;
-	for(it=keyword.begin();it!=keyword.end();it++)
-		if(it->first==key)
-		{
-			p=1;
-			break;
-		}
-	if(p==1)
-	{
-		if(keyword.at(key)!="/0")
-        	return keyword.at(key);
-    	else
-        	return "null";
-	}
-	return "null";
 
-}
+class variable
+{
+    public:
+        bool set_value(map<string,string>&variables, string &key,string &value){
+            variables.insert({key,value});
+        }
+
+        string get_value(map<string,string>&variables, string key){
+            map<string,string>::iterator it;
+            int p=0;
+            for(it=variables.begin();it!=variables.end();it++)
+                if(it->first==key){
+                    p=1;
+                    break;
+                }
+            if(p==1){
+                if(variables.at(key)!="\0")
+                    return variables.at(key);
+                else
+                    return "\0";
+            }
+            else
+                return "\0";
+        }
+};
+
+#endif // VARIABLE_H
