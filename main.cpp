@@ -1,13 +1,14 @@
 #include<iostream>
 #include<list>
 #include<string>
+#include<stdlib.h>
 #include"source.h"
-#include"variable.h"
 #include"help.h"
+#include"compile.h"
 using namespace std;
 int main(){
     BEGIN: system("clear");
-    cout<<"Enter 'O' to open a file , 'H' to get help and 'E' to exit ";
+    cout<<"Enter 'O' to open a file , 'H' to get help or 'E' to exit ";
     char ch;
     cin>>ch;
     string flow="start";
@@ -24,7 +25,7 @@ int main(){
                 if(flow!="start"){
                     cout<<"\n"<<flow<<": "<<hlp.show(flow)<<endl;
                 }
-                cout<<"\n\nEnter a keyword from above list to get help and 'Q' to exit help: ";
+                cout<<"\n\nEnter a keyword from above list to get help OR 'Q' to exit help: ";
                 cin>>flow;
                 if(flow=="q" || flow=="Q"){
                     goto BEGIN;
@@ -33,13 +34,20 @@ int main(){
         break;
         case 'o':
         case 'O':
-            cout<<"Enter the name of file"<<endl;
-            cin>>src.filename;
+            cout<<"\nsource codes\n````````````\n";
+            src.list_dir();
+            cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
+            if(flow=="start")
+                cin>>src.filename;
             FILE:
+            string topicName="source/"+src.filename+".txt";
+                topicName = "subl \"" + topicName + "\"";
+                system(topicName.c_str());
             while(1){
                 if(!src.open_file()){
                     src.new_file();
                 }
+
                 system("clear");
                 cout<<src.filename<<"\n\n";
                 cout<<"please go to source/"<<src.filename<<".txt and write the code in hyperbole\n\n\n";
@@ -47,7 +55,7 @@ int main(){
                 src.show_file();
                 cout<<endl;
                 for(int i=0;i<50;i++) cout<<"`";
-                cout<<"\n\nPress 'R' to Refresh,'C' to Compile n Run and 'Q' to close this file "<<endl;
+                cout<<"\n\nPress 'R' to Refresh,'C' to Compile n Run OR 'Q' to close this file "<<endl;
                 cin>>flow;
                 if(flow=="q" || flow=="Q"){
                     goto BEGIN;
@@ -58,22 +66,12 @@ int main(){
                 src.close_file();
             }
         break;
-            COMPILE:
-
-
-
-
-
-
-
-
-
-
-
-
-
-            cout<<"\n\nPress any key to continue. "<<endl;
-            cin>>ch;
+            COMPILE: system("clear");
+            cout<<"Terminal\n````````\n\n\n";
+            compile cmp(src.lol);
+            cmp.show_file();
+            cout<<"\n\nPress Enter to continue... ";
+            cin.get();cin.get();
             src.close_file();
             goto FILE;
         break;

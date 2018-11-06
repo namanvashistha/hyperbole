@@ -1,6 +1,8 @@
 #ifndef HELP_H
 #define HELP_H
-
+#include<string>
+#include<map>
+#include<iostream>
 
 class help
 {

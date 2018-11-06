@@ -1,6 +1,7 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 #include<iostream>
+#include<dirent.h>
 #include<fstream>
 #include<list>
 #include<string>
@@ -14,6 +15,7 @@ class source{
         bool open_file();
         bool show_file();
         bool close_file();
+        bool list_dir();
 
 };
 bool source::new_file(){
@@ -22,7 +24,28 @@ bool source::new_file(){
     return true;
 }
 
+bool source::list_dir(){
+   DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir ("source")) != NULL) {
+        int nxt_lin=0;
+        while ((ent = readdir (dir)) != NULL) {
+            string f_name=ent->d_name;
+            if(f_name[f_name.size()-1]=='t'){
+                f_name= f_name.substr(0, f_name.size()-4);
+                if(nxt_lin%5==0) cout<<endl;
+                cout<<f_name<<"\t";
+                nxt_lin++;
+            }
+        }
+        closedir (dir);
+    } else {
+         perror ("");
+    }
+}
+
 bool source::open_file(){
+
     fstream file;
     file.open("source/"+filename+".txt");
     if(file.fail()) return false;

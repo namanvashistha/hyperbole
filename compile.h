@@ -12,12 +12,14 @@ class compile
 {
     public:
         list<list<string>> code;
+        string result;
         compile(list<list<string>> lol);
         bool show_file();
 };
 
 compile::compile(list<list<string>> lol){
     code=lol;
+    result="";
 }
 
 bool compile::show_file(){
