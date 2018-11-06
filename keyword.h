@@ -1,17 +1,17 @@
-#ifndef HELP_H
-#define HELP_H
+#ifndef KEYWORD_H
+#define KEYWORD_H
+#include<string>
+#include<map>
+#include<iostream>
 
-
-class help
+class keyword
 {
     public:
         map<string,string> keywords;
-        help();
-        void show();
-        string show(string key);
+        keyword();
 };
 
-help::help(){
+keyword::keyword(){
     fstream file;
     file.open("keyword.txt");
     if(file.fail()){
@@ -45,30 +45,4 @@ help::help(){
     }
 }
 
-void help::show(){
-    map<string,string>::iterator it;
-    for(it=keywords.begin();it!=keywords.end();it++){
-        cout<<"- "<<it->first<<"\n";
-    }
-}
-
-string help::show(string key){
-    map<string,string>::iterator it;
-    int p=0;
-    for(it=keywords.begin();it!=keywords.end();it++){
-        if(it->first==key){
-            p=1;
-            break;
-        }
-    }
-    if(p==1){
-        if(keywords.at(key)!="\0")
-            return keywords.at(key);
-        else
-            return "doesn't exist";
-    }
-    else
-        return "doesn't exist";
-}
-
-#endif // HELP_H
+#endif // KEYWORD_H
