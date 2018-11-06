@@ -12,14 +12,41 @@ class compile
 {
     public:
         list<list<string>> code;
-        string result;
+        variable var;
+        keyword key;
+        algo alg;
         compile(list<list<string>> lol);
+        void compiling();
+        void show_memory();
         bool show_file();
 };
 
 compile::compile(list<list<string>> lol){
     code=lol;
-    result="";
+    alg.varib=&var;
+}
+
+void compile::compiling(){
+    list<list<string>>::iterator itr;
+    for (itr=code.begin(); itr != code.end(); itr++){
+        list<string>tl=*itr;
+        list<string>::iterator it=tl.begin();
+            alg.l=tl;
+            if(*it=="display"){
+                alg.display();
+            }
+            else if(*it=="fetch"){
+                alg.fetch();
+            }
+    }
+}
+
+void compile::show_memory(){
+    map<string,string>::iterator it;
+    cout<<"\n\nMemory:\n";
+    for(it=var.variables.begin();it!=var.variables.end();it++){
+        cout<<"\n"<<it->first<<"="<<it->second<<"\n";
+    }
 }
 
 bool compile::show_file(){

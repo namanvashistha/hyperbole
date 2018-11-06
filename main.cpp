@@ -14,7 +14,6 @@ int main(){
     string flow="start";
     help hlp;
     source src;
-    variable var;
     switch(ch){
         case 'h':
         case 'H':
@@ -67,9 +66,10 @@ int main(){
             }
         break;
             COMPILE: system("clear");
-            cout<<"Terminal\n````````\n\n\n";
+            cout<<"Terminal\n````````\n";
             compile cmp(src.lol);
-            cmp.show_file();
+            cmp.compiling();
+            cmp.show_memory();
             cout<<"\n\nPress Enter to continue... ";
             cin.get();cin.get();
             src.close_file();
