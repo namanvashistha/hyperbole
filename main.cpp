@@ -39,9 +39,7 @@ int main(){
             if(flow=="start")
                 cin>>src.filename;
             FILE:
-            string topicName="source/"+src.filename+".txt";
-                topicName = "subl \"" + topicName + "\"";
-                system(topicName.c_str());
+            src.open_editor();
             while(1){
                 if(!src.open_file()){
                     src.new_file();
@@ -68,13 +66,13 @@ int main(){
             COMPILE: system("clear");
             cout<<"Terminal\n````````\n";
             compile cmp(src.lol);
-            cmp.compiling();
+            cmp.executing();
             cmp.show_memory();
+
             cout<<"\n\nPress Enter to continue... ";
             cin.get();cin.get();
             src.close_file();
             goto FILE;
         break;
-
     }
 }

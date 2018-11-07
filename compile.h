@@ -16,7 +16,7 @@ class compile
         keyword key;
         algo alg;
         compile(list<list<string>> lol);
-        void compiling();
+        void executing();
         void show_memory();
         bool show_file();
 };
@@ -26,7 +26,7 @@ compile::compile(list<list<string>> lol){
     alg.varib=&var;
 }
 
-void compile::compiling(){
+void compile::executing(){
     list<list<string>>::iterator itr;
     for (itr=code.begin(); itr != code.end(); itr++){
         list<string>tl=*itr;
@@ -38,7 +38,11 @@ void compile::compiling(){
             else if(*it=="fetch"){
                 alg.fetch();
             }
+            else{
+                alg.expression();
+            }
     }
+    alg.show_errors();
 }
 
 void compile::show_memory(){

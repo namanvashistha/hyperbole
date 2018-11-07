@@ -16,6 +16,7 @@ class source{
         bool show_file();
         bool close_file();
         bool list_dir();
+        bool open_editor();
 
 };
 bool source::new_file(){
@@ -44,6 +45,12 @@ bool source::list_dir(){
     }
 }
 
+bool source::open_editor(){
+    string topicName="source/"+filename+".txt";
+    topicName = "subl \"" + topicName + "\"";
+    system(topicName.c_str());
+}
+
 bool source::open_file(){
 
     fstream file;
@@ -57,9 +64,16 @@ bool source::open_file(){
     }
     list<string> l;
     string word="";
+    int str_flg=0;
     for(unsigned int i=0;i< s.length();i++){
-        if(s[i]!=' ' && s[i]!=';'){
+        if(s[i]!=' ' && s[i]!=';' && str_flg==0){
             word+=s[i];
+            if(s[i]=='"') str_flg=1;
+        }
+        else if(str_flg==1){
+            word+=s[i];
+            if(s[i]=='"') str_flg=0;
+            continue;
         }
         else{
             if(word!=""){
