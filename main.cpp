@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include"source.h"
 #include"help.h"
-#include"compile.h"
+#include"execute.h"
 using namespace std;
 int main(){
     BEGIN: system("clear");
@@ -65,9 +65,9 @@ int main(){
         break;
             COMPILE: system("clear");
             cout<<"Terminal\n````````\n";
-            compile cmp(src.lol);
-            cmp.executing();
-            cmp.show_memory();
+            execute exe(src.lol);
+            exe.executing();
+            exe.show_memory();
 
             cout<<"\n\nPress Enter to continue... ";
             cin.get();cin.get();

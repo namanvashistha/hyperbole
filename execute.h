@@ -8,25 +8,25 @@
 #include"keyword.h"
 #include"algo.h"
 
-class compile
+class execute
 {
     public:
         list<list<string>> code;
         variable var;
         keyword key;
         algo alg;
-        compile(list<list<string>> lol);
+        execute(list<list<string>> lol);
         void executing();
         void show_memory();
         bool show_file();
 };
 
-compile::compile(list<list<string>> lol){
+execute::execute(list<list<string>> lol){
     code=lol;
     alg.varib=&var;
 }
 
-void compile::executing(){
+void execute::executing(){
     list<list<string>>::iterator itr;
     for (itr=code.begin(); itr != code.end(); itr++){
         list<string>tl=*itr;
@@ -52,7 +52,7 @@ void compile::executing(){
     var.show_errors();
 }
 
-void compile::show_memory(){
+void execute::show_memory(){
     map<string,string>::iterator it;
     cout<<"\nMemory:\n";
     for(it=var.variables.begin();it!=var.variables.end();it++){
@@ -60,7 +60,7 @@ void compile::show_memory(){
     }
 }
 
-bool compile::show_file(){
+bool execute::show_file(){
     list<list<string>>::iterator itr;
     for (itr=code.begin(); itr != code.end(); itr++){
         list<string>tl=*itr;
