@@ -41,18 +41,22 @@ void compile::executing(){
             else if(*it=="declare"){
                 alg.declare();
             }
+            else if(*it=="check"){
+                alg.condition();
+            }
             else{
                 alg.expression();
             }
     }
     alg.show_errors();
+    var.show_errors();
 }
 
 void compile::show_memory(){
     map<string,string>::iterator it;
-    cout<<"\n\nMemory:\n";
+    cout<<"\nMemory:\n";
     for(it=var.variables.begin();it!=var.variables.end();it++){
-        cout<<"\n"<<it->first<<"="<<it->second<<"\n";
+        cout<<it->first<<" = "<<it->second<<"\n";
     }
 }
 

@@ -20,6 +20,7 @@ class algo{
         int applyOp(int a, int b, char op);
         int evaluate(string tokens);
         void expression();
+        bool condition();
         int string_to_int(string);
         string int_to_string(int);
         string trim(string);
@@ -107,25 +108,140 @@ void algo::expression(){
     if(varib->get_value(lhs)=="\0" ){
             errors+="undefined variable;";
         }
-    string final_rhs="";
     if(rhs[0]=='"' && rhs[rhs.length()-1]=='"'){
-        final_rhs=rhs.substr(1,rhs.size()-2);
+        rhs=rhs.substr(1,rhs.size()-2);
     }
     else{
-        for(int i=0;i<rhs.length();i++){
-            final_rhs+=rhs[i];
-            if(isalpha(rhs[i]) || isdigit(rhs[i]))
-                if(isalpha(rhs[i+1]) || isdigit(rhs[i+1]))
-                    continue;
-            if(i!=rhs.length()-1)
-                final_rhs+=" ";
-        }
-        final_rhs=int_to_string(evaluate(final_rhs));
+        rhs=int_to_string(evaluate(rhs));
     }
-    varib->set_value(lhs,final_rhs);
+    varib->set_value(lhs,rhs);
+}
+
+bool algo::condition(){
+    auto it=l.begin();
+    int flag=100;
+    string lhs="",rhs="";
+    for(++it;it!=l.end();it++){
+        string exp=*it;
+        for(int i=0;i<exp.length();i++){
+            if(exp[i]=='=' && exp[i+1]=='='){
+                flag=1;
+                i++;
+                continue;
+            }
+            else if(exp[i]=='!' && exp[i+1]=='='){
+                flag=2;
+                i++;
+                continue;
+            }
+            if(exp[i]=='='){
+                flag=3;
+                continue;
+            }
+            else if(exp[i]=='<' && exp[i+1]=='='){
+                flag=4;
+                i++;
+                continue;
+            }
+            else if(exp[i]=='<'){
+                flag=5;
+                continue;
+            }
+            else if(exp[i]=='>' && exp[i+1]=='='){
+                flag=6;
+                i++;
+                continue;
+            }
+            else if(exp[i]=='>'){
+                flag=7;
+                continue;
+            }
+            if(flag==100)
+                lhs+=exp[i];
+            else
+                rhs+=exp[i];
+        }
+    }
+    bool res=false;
+    if(flag==1){
+        if(evaluate(lhs)==evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    else if(flag==2){
+        if(evaluate(lhs)!=evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    else if(flag==3){
+        if(varib->get_value(lhs)=="\0" ){
+            errors+="undefined variable;";
+        }
+        else{
+            res=true;
+        }
+        if(rhs[0]=='"' && rhs[rhs.length()-1]=='"'){
+            rhs=rhs.substr(1,rhs.size()-2);
+        }
+        else{
+            rhs=int_to_string(evaluate(rhs));
+        }
+        varib->set_value(lhs,rhs);
+
+    }
+    else if(flag==4){
+        if(evaluate(lhs)<=evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    else if(flag==5){
+        if(evaluate(lhs)<evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    else if(flag==6){
+        if(evaluate(lhs)>=evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    else if(flag==7){
+        if(evaluate(lhs)>evaluate(rhs)){
+            res=true;
+        }
+        else{
+            res=false;
+        }
+    }
+    cout<<res;
+    return res;
 }
 
 int algo::evaluate(string tokens){
+    string rhs="";
+    for(int i=0;i<tokens.length();i++){
+        rhs+=tokens[i];
+        if(isalpha(tokens[i]) || isdigit(tokens[i]))
+            if(isalpha(tokens[i+1]) || isdigit(tokens[i+1]))
+                continue;
+        if(i!=tokens.length()-1)
+            rhs+=" ";
+    }
+    tokens=rhs;
     int i;
     stack <int> values;
     stack <char> ops;

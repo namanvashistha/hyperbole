@@ -8,11 +8,23 @@ using namespace std;
 class variable{
     public:
         map<string,string> variables;
+        string errors="";
         bool set_value(string &key,string &value);
         string get_value(string key);
+        void show_errors();
 };
 
 bool variable::set_value(string &key,string &value){
+    int flag=0;
+    for(int i=0;i<key.length();i++){
+        if(!(isalpha(key[i]) || isdigit(key[i]) || key[i]=='_')){
+            flag=1;
+            break;
+        }
+    }
+    if((!isalpha(key[0])) || flag==1){
+        errors+=key+" is a  illegal name of variable;";
+    }
     map<string,string>::iterator it;
     int p=0;
     for(it=variables.begin();it!=variables.end();it++){
@@ -47,5 +59,15 @@ string variable::get_value(string key){
         return "\0";
 }
 
+void variable::show_errors(){
+    cout<<"\n\n";
+    for(int i=0;i<errors.length();i++){
+        if(errors[i]==';'){
+            cout<<endl;
+            continue;
+        }
+        cout<<errors[i];
+    }
+}
 
 #endif // VARIABLE_H
