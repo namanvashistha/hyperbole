@@ -38,6 +38,9 @@ void compile::executing(){
             else if(*it=="fetch"){
                 alg.fetch();
             }
+            else if(*it=="declare"){
+                alg.declare();
+            }
             else{
                 alg.expression();
             }

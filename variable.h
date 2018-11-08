@@ -13,7 +13,19 @@ class variable{
 };
 
 bool variable::set_value(string &key,string &value){
-    variables.insert({key,value});
+    map<string,string>::iterator it;
+    int p=0;
+    for(it=variables.begin();it!=variables.end();it++){
+        if(it->first==key){
+            p=1;
+            break;
+        }
+    }
+    if(p==1){
+        variables[key]=value;
+    }
+    else
+        variables.insert({key,value});
 }
 
 string variable::get_value(string key){

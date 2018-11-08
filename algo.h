@@ -14,6 +14,7 @@ class algo{
         variable *varib;
         algo();
         void display();
+        void declare();
         void fetch();
         int precedence(char op);
         int applyOp(int a, int b, char op);
@@ -50,11 +51,23 @@ void algo::display(){
 }
 
 void algo::fetch(){
-    string temp_cin;
-    cin>>temp_cin;
     list<string>::iterator it=l.begin();
-    it=next(it,1);
-    varib->set_value(*it,temp_cin);
+    for(it++;it!=l.end();it++){
+        string temp_cin;
+        cin>>temp_cin;
+        if(varib->get_value(*it)=="\0" ){
+            errors+="undefined variable;";
+        }
+        varib->set_value(*it,temp_cin);
+    }
+}
+
+void algo::declare(){
+    list<string>::iterator it=l.begin();
+    for(it++;it!=l.end();it++){
+        string dec="declared";
+        varib->set_value(*it,dec);
+    }
 }
 
 int algo::precedence(char op){
@@ -91,17 +104,24 @@ void algo::expression(){
                 rhs+=exp[i];
         }
     }
-
+    if(varib->get_value(lhs)=="\0" ){
+            errors+="undefined variable;";
+        }
     string final_rhs="";
-    for(int i=0;i<rhs.length();i++){
-        final_rhs+=rhs[i];
-        if(isalpha(rhs[i]) || isdigit(rhs[i]))
-            if(isalpha(rhs[i+1]) || isdigit(rhs[i+1]))
-                continue;
-        if(i!=rhs.length()-1)        
-            final_rhs+=" ";
+    if(rhs[0]=='"' && rhs[rhs.length()-1]=='"'){
+        final_rhs=rhs.substr(1,rhs.size()-2);
     }
-    final_rhs=int_to_string(evaluate(final_rhs));
+    else{
+        for(int i=0;i<rhs.length();i++){
+            final_rhs+=rhs[i];
+            if(isalpha(rhs[i]) || isdigit(rhs[i]))
+                if(isalpha(rhs[i+1]) || isdigit(rhs[i+1]))
+                    continue;
+            if(i!=rhs.length()-1)
+                final_rhs+=" ";
+        }
+        final_rhs=int_to_string(evaluate(final_rhs));
+    }
     varib->set_value(lhs,final_rhs);
 }
 
