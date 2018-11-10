@@ -21,8 +21,10 @@ class algo{
         int evaluate(string tokens);
         void expression();
         bool condition();
+        bool condition_evaluate(string);
         int string_to_int(string);
         string int_to_string(int);
+        void replace_substring(string&,int,int,string);
         string trim(string);
         void show_errors();
 };
@@ -118,49 +120,76 @@ void algo::expression(){
 }
 
 bool algo::condition(){
-    auto it=l.begin();
-    int flag=100;
-    string lhs="",rhs="";
-    for(++it;it!=l.end();it++){
+    string con="";
+    list<string>::iterator it=l.begin();
+    for(it++;it!=l.end();it++){
         string exp=*it;
         for(int i=0;i<exp.length();i++){
-            if(exp[i]=='=' && exp[i+1]=='='){
-                flag=1;
-                i++;
+            if(exp[i]==' '){
                 continue;
             }
-            else if(exp[i]=='!' && exp[i+1]=='='){
-                flag=2;
-                i++;
-                continue;
-            }
-            if(exp[i]=='='){
-                flag=3;
-                continue;
-            }
-            else if(exp[i]=='<' && exp[i+1]=='='){
-                flag=4;
-                i++;
-                continue;
-            }
-            else if(exp[i]=='<'){
-                flag=5;
-                continue;
-            }
-            else if(exp[i]=='>' && exp[i+1]=='='){
-                flag=6;
-                i++;
-                continue;
-            }
-            else if(exp[i]=='>'){
-                flag=7;
-                continue;
-            }
-            if(flag==100)
-                lhs+=exp[i];
-            else
-                rhs+=exp[i];
+            con+=exp[i];
         }
+    }
+    string lhs="",rhs="";
+    int flag=0;
+    for(int i=0;i<con.length();i++){
+        lhs+=con[i];
+        if(con[i]=='&' && con[i+1] =='&'){
+            flag=1;
+            i++;
+            continue;
+        }
+        else if(con[i]=='|' && con[i+1] =='|'){
+            lhs="";
+        }
+    }
+    cout<<con<<endl;
+    cout<<condition_evaluate(con)<<endl;
+    replace_substring(con,0,2,"_");
+    cout<<con;
+}
+
+bool algo::condition_evaluate(string tokens){
+    int flag=100;
+    string lhs="",rhs="";
+    for(int i=0;i<tokens.length();i++){
+        if(tokens[i]=='=' && tokens[i+1]=='='){
+            flag=1;
+            i++;
+            continue;
+        }
+        else if(tokens[i]=='!' && tokens[i+1]=='='){
+            flag=2;
+            i++;
+            continue;
+        }
+        if(tokens[i]=='='){
+            flag=3;
+            continue;
+        }
+        else if(tokens[i]=='<' && tokens[i+1]=='='){
+            flag=4;
+            i++;
+            continue;
+        }
+        else if(tokens[i]=='<'){
+            flag=5;
+            continue;
+        }
+        else if(tokens[i]=='>' && tokens[i+1]=='='){
+            flag=6;
+            i++;
+            continue;
+        }
+        else if(tokens[i]=='>'){
+            flag=7;
+            continue;
+        }
+        if(flag==100)
+            lhs+=tokens[i];
+        else
+            rhs+=tokens[i];
     }
     bool res=false;
     if(flag==1){
@@ -227,7 +256,6 @@ bool algo::condition(){
             res=false;
         }
     }
-    cout<<res;
     return res;
 }
 
@@ -335,6 +363,21 @@ string algo::int_to_string(int num){
     return str;
 }
 
+void algo::replace_substring(string &str,int first,int last,string sub_str){
+    string temp="";
+    for(int i=0;i<str.length();i++){
+        if(i<first || i>last){
+            temp+=str[i];
+        }
+        else{
+            for(int j=0;j<sub_str.length();j++){
+                temp+=sub_str[j];
+            }
+            i=last;
+        }
+    }
+    str=temp;
+}
 
 void algo::show_errors(){
     cout<<"\n\n";
