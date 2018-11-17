@@ -144,10 +144,9 @@ bool algo::condition(){
             lhs="";
         }
     }
-    cout<<con<<endl;
+    
     cout<<condition_evaluate(con)<<endl;
-    replace_substring(con,0,2,"_");
-    cout<<con;
+    replace_substring(con,0,0,"_");
 }
 
 bool algo::condition_evaluate(string tokens){
