@@ -14,6 +14,7 @@ class source{
         bool new_file();
         bool open_file();
         bool show_file();
+        bool write_file();
         bool close_file();
         bool list_dir();
         bool open_editor();
@@ -101,6 +102,22 @@ bool source::show_file(){
         cout<<";"<<endl;
     }
 }
+
+bool source::write_file(){
+    ofstream file;
+    file.open("source/"+filename+".txt");
+    list<list<string>>::iterator itr;
+    for (itr=lol.begin(); itr != lol.end(); itr++){
+        list<string>tl=*itr;
+        list<string>::iterator it;
+        cout<<"\t";
+        for(it=tl.begin();it!=tl.end();it++){
+            file<<*it<<" ";
+        }
+        file<<";"<<endl;
+    }
+}
+
 bool source::close_file(){
     lol.erase(lol.begin(),lol.end());
 }

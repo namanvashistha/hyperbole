@@ -42,7 +42,7 @@ void execute::executing(){
                 alg.declare();
             }
             else if(*it=="check"){
-                alg.condition();
+                cout<<alg.condition();
             }
             else{
                 alg.expression();

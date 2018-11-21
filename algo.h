@@ -75,9 +75,13 @@ void algo::declare(){
 
 int algo::precedence(char op){
     if(op == '+'||op == '-')
-    return 1;
+        return 1;
     if(op == '*'||op == '/')
-    return 2;
+        return 2;
+    if(op == '&')
+        return 3;
+    if(op == '|')
+        return 4;
     return 0;
 }
 
@@ -87,6 +91,8 @@ int algo::applyOp(int a, int b, char op){
         case '-': return a - b;
         case '*': return a * b;
         case '/': return a / b;
+        case '&': return a && b;
+        case '|': return a || b;
     }
 }
 
@@ -145,7 +151,7 @@ bool algo::condition(){
         }
     }
     
-    cout<<condition_evaluate(con)<<endl;
+    return condition_evaluate(con);
     replace_substring(con,0,0,"_");
 }
 
