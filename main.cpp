@@ -47,7 +47,7 @@ int main(){
                 }
                 system("clear");
                 cout<<src.filename<<"\n\n";
-                cout<<"please go to source/"<<src.filename<<".txt and write the code in hyperbole\n\n\n";
+                cout<<"please go to source/"<<src.filename<<".hyp and write the code in hyperbole\n\n\n";
                 for(int i=0;i<50;i++) cout<<"`"; cout<<endl;
                 src.show_file();
                 cout<<endl;

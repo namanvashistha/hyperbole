@@ -22,7 +22,7 @@ class source{
 };
 bool source::new_file(){
     ofstream file;
-    file.open("source/"+filename+".txt");
+    file.open("source/"+filename+".hyp");
     return true;
 }
 
@@ -33,7 +33,7 @@ bool source::list_dir(){
         int nxt_lin=0;
         while ((ent = readdir (dir)) != NULL) {
             string f_name=ent->d_name;
-            if(f_name[f_name.size()-1]=='t'){
+            if(f_name[f_name.size()-1]=='p'){
                 f_name= f_name.substr(0, f_name.size()-4);
                 if(nxt_lin%5==0) cout<<endl;
                 cout<<f_name<<"\t";
@@ -47,7 +47,7 @@ bool source::list_dir(){
 }
 
 bool source::open_editor(){
-    string topicName="source/"+filename+".txt";
+    string topicName="source/"+filename+".hyp";
     topicName = "subl \"" + topicName + "\"";
     system(topicName.c_str());
 }
@@ -55,7 +55,7 @@ bool source::open_editor(){
 bool source::open_file(){
 
     fstream file;
-    file.open("source/"+filename+".txt");
+    file.open("source/"+filename+".hyp");
     if(file.fail()) return false;
     string s="";
     while(file){
@@ -105,7 +105,7 @@ bool source::show_file(){
 
 bool source::write_file(){
     ofstream file;
-    file.open("source/"+filename+".txt");
+    file.open("source/"+filename+".hyp");
     list<list<string>>::iterator itr;
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;
