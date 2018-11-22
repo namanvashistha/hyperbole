@@ -9,7 +9,7 @@ using namespace std;
 
 class source{
     public:
-        list<list<string>> lol;
+        list<list<string> > lol;
         string filename;
         bool new_file();
         bool open_file();
@@ -49,7 +49,11 @@ bool source::list_dir(){
 bool source::open_editor(){
     string topicName="source/"+filename+".hyp";
     topicName = "subl \"" + topicName + "\"";
-    system(topicName.c_str());
+    if(system(topicName.c_str())){
+        string topicName="source/"+filename+".hyp";
+        topicName = "notepad \"" + topicName + "\"";
+        system(topicName.c_str());
+    }
 }
 
 bool source::open_file(){
@@ -91,7 +95,7 @@ bool source::open_file(){
 }
 
 bool source::show_file(){
-    list<list<string>>::iterator itr;
+    list<list<string> >::iterator itr;
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;
         list<string>::iterator it;
@@ -106,7 +110,7 @@ bool source::show_file(){
 bool source::write_file(){
     ofstream file;
     file.open("source/"+filename+".hyp");
-    list<list<string>>::iterator itr;
+    list<list<string> >::iterator itr;
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;
         list<string>::iterator it;

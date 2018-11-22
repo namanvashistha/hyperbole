@@ -5,7 +5,6 @@
 #include"source.h"
 #include"help.h"
 #include"execute.h"
-//test
 using namespace std;
 int main(){
     BEGIN: system("clear");

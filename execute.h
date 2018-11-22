@@ -11,7 +11,7 @@
 class execute
 {
     public:
-        list<list<string>> code;
+        list<list<string> > code;
         variable var;
         keyword key;
         algo alg;
@@ -21,13 +21,13 @@ class execute
         bool show_file();
 };
 
-execute::execute(list<list<string>> lol){
+execute::execute(list<list<string> > lol){
     code=lol;
     alg.varib=&var;
 }
 
 void execute::executing(){
-    list<list<string>>::iterator itr;
+    list<list<string> >::iterator itr;
     for (itr=code.begin(); itr != code.end(); itr++){
         list<string>tl=*itr;
         list<string>::iterator it=tl.begin();
@@ -61,7 +61,7 @@ void execute::show_memory(){
 }
 
 bool execute::show_file(){
-    list<list<string>>::iterator itr;
+    list<list<string> >::iterator itr;
     for (itr=code.begin(); itr != code.end(); itr++){
         list<string>tl=*itr;
         list<string>::iterator it;
