@@ -16,11 +16,11 @@ class algo{
         void display();
         void declare();
         void fetch();
-        int precedence(char op);
-        int applyOp(int a, int b, char op);
+        int precedence(string op);
+        int applyOp(int a, int b, string op);
         int evaluate(string tokens);
         void expression();
-        bool condition();
+        int condition();
         bool condition_evaluate(string);
         int string_to_int(string);
         string int_to_string(int);
@@ -30,7 +30,7 @@ class algo{
 };
 
 algo::algo(){
-    //cout<<evaluate("100 * ( 2 + 12 ) / 14");
+
 }
 
 void algo::display(){
@@ -73,27 +73,36 @@ void algo::declare(){
     }
 }
 
-int algo::precedence(char op){
-    if(op == '+'||op == '-')
+int algo::precedence(string op){
+    if(op == "||")
         return 1;
-    if(op == '*'||op == '/')
+    if(op == "&&")
         return 2;
-    if(op == '&')
+    if(op == "==" || op == "!=")
         return 3;
-    if(op == '|')
+    if(op == "<=" || op == ">=" || op == ">" || op == "<")
         return 4;
+    if(op == "+" || op == "-")
+        return 5;
+    if(op == "*" || op == "/")
+        return 6;
+    
     return 0;
 }
 
-int algo::applyOp(int a, int b, char op){
-    switch(op){
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
-        case '/': return a / b;
-        case '&': return a && b;
-        case '|': return a || b;
-    }
+int algo::applyOp(int a, int b, string op){
+        if(op == "+") return a + b;
+        else if(op == "-") return a - b;
+        else if(op == "*") return a * b;
+        else if(op == "/") return a / b;
+        else if(op == "&&") return a && b;
+        else if(op == "||") return a || b;
+        else if(op == "==") return a == b;
+        else if(op == "!=") return a != b;
+        else if(op == ">=") return a >= b;
+        else if(op == "<=") return a <= b;
+        else if(op == ">") return a > b;
+        else if(op == "<") return a < b;
 }
 
 void algo::expression(){
@@ -125,7 +134,7 @@ void algo::expression(){
     varib->set_value(lhs,rhs);
 }
 
-bool algo::condition(){
+int algo::condition(){
     string con="";
     list<string>::iterator it=l.begin();
     for(it++;it!=l.end();it++){
@@ -137,131 +146,7 @@ bool algo::condition(){
             con+=exp[i];
         }
     }
-    string lhs="",rhs="";
-    int flag=0;
-    for(int i=0;i<con.length();i++){
-        lhs+=con[i];
-        if(con[i]=='&' && con[i+1] =='&'){
-            flag=1;
-            i++;
-            continue;
-        }
-        else if(con[i]=='|' && con[i+1] =='|'){
-            lhs="";
-        }
-    }
-    
-    return condition_evaluate(con);
-    replace_substring(con,0,0,"_");
-}
-
-bool algo::condition_evaluate(string tokens){
-    int flag=100;
-    string lhs="",rhs="";
-    for(int i=0;i<tokens.length();i++){
-        if(tokens[i]=='=' && tokens[i+1]=='='){
-            flag=1;
-            i++;
-            continue;
-        }
-        else if(tokens[i]=='!' && tokens[i+1]=='='){
-            flag=2;
-            i++;
-            continue;
-        }
-        if(tokens[i]=='='){
-            flag=3;
-            continue;
-        }
-        else if(tokens[i]=='<' && tokens[i+1]=='='){
-            flag=4;
-            i++;
-            continue;
-        }
-        else if(tokens[i]=='<'){
-            flag=5;
-            continue;
-        }
-        else if(tokens[i]=='>' && tokens[i+1]=='='){
-            flag=6;
-            i++;
-            continue;
-        }
-        else if(tokens[i]=='>'){
-            flag=7;
-            continue;
-        }
-        if(flag==100)
-            lhs+=tokens[i];
-        else
-            rhs+=tokens[i];
-    }
-    bool res=false;
-    if(flag==1){
-        if(evaluate(lhs)==evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    else if(flag==2){
-        if(evaluate(lhs)!=evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    else if(flag==3){
-        if(varib->get_value(lhs)=="\0" ){
-            errors+="undefined variable;";
-        }
-        else{
-            res=true;
-        }
-        if(rhs[0]=='"' && rhs[rhs.length()-1]=='"'){
-            rhs=rhs.substr(1,rhs.size()-2);
-        }
-        else{
-            rhs=int_to_string(evaluate(rhs));
-        }
-        varib->set_value(lhs,rhs);
-
-    }
-    else if(flag==4){
-        if(evaluate(lhs)<=evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    else if(flag==5){
-        if(evaluate(lhs)<evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    else if(flag==6){
-        if(evaluate(lhs)>=evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    else if(flag==7){
-        if(evaluate(lhs)>evaluate(rhs)){
-            res=true;
-        }
-        else{
-            res=false;
-        }
-    }
-    return res;
+    return evaluate(con);
 }
 
 int algo::evaluate(string tokens){
@@ -277,12 +162,14 @@ int algo::evaluate(string tokens){
     tokens=rhs;
     int i;
     stack <int> values;
-    stack <char> ops;
+    stack <string> ops;
     for(i = 0; i < tokens.length(); i++){
         if(tokens[i] == ' ')
             continue;
         else if(tokens[i] == '('){
-            ops.push(tokens[i]);
+            string temp="";
+            temp=tokens[i];
+            ops.push(temp);
         }
         else if(isdigit(tokens[i])){
             int val = 0;
@@ -290,7 +177,6 @@ int algo::evaluate(string tokens){
                 val = (val*10) + (tokens[i]-'0');
                 i++;
             }
-
             values.push(val);
         }
         else if(isalpha(tokens[i])){
@@ -307,7 +193,7 @@ int algo::evaluate(string tokens){
             }
         }
         else if(tokens[i] == ')'){
-            while(!ops.empty() && ops.top() != '(')
+            while(!ops.empty() && ops.top() != "(")
             {
                 int val2 = values.top();
                 values.pop();
@@ -315,7 +201,7 @@ int algo::evaluate(string tokens){
                 int val1 = values.top();
                 values.pop();
 
-                char op = ops.top();
+                string op = ops.top();
                 ops.pop();
 
                 values.push(applyOp(val1, val2, op));
@@ -323,19 +209,30 @@ int algo::evaluate(string tokens){
             ops.pop();
         }
         else{
-            while(!ops.empty() && precedence(ops.top()) >= precedence(tokens[i])){
+            string temp="";
+            temp=tokens[i];
+            if(tokens[i]=='=' || tokens[i]=='!' || tokens[i]=='<' || tokens[i]=='>' || tokens[i]=='&' || tokens[i]=='|'){
+                if(tokens[i+1]==' '){
+                    if(tokens[i+2]=='=' || tokens[i+2]=='&' || tokens[i+2]=='|'){
+                        temp+=tokens[i+2];
+                        i=i+2;
+                    }
+                }
+            }
+
+            while(!ops.empty() && precedence(ops.top()) >= precedence(temp)){
                 int val2 = values.top();
                 values.pop();
 
                 int val1 = values.top();
                 values.pop();
 
-                char op = ops.top();
+                string op = ops.top();
                 ops.pop();
 
                 values.push(applyOp(val1, val2, op));
             }
-            ops.push(tokens[i]);
+            ops.push(temp);
         }
     }
     while(!ops.empty()){
@@ -345,7 +242,7 @@ int algo::evaluate(string tokens){
         int val1 = values.top();
         values.pop();
 
-        char op = ops.top();
+        string op = ops.top();
         ops.pop();
 
         values.push(applyOp(val1, val2, op));
