@@ -25,7 +25,6 @@ class algo{
         int string_to_int(string);
         string int_to_string(int);
         void replace_substring(string&,int,int,string);
-        string trim(string);
         void show_errors();
 };
 
@@ -34,8 +33,8 @@ algo::algo(){
 }
 
 void algo::display(){
-    list<string>::iterator it=l.begin();
-    for(it++;it!=l.end();it++){
+    list<string>::iterator it=next(l.begin());
+    for(++it;it!=l.end();it++){
         string dis_string=*it;
         if(varib->get_value(dis_string)!="\0"){
             cout<<varib->get_value(dis_string);
@@ -54,8 +53,8 @@ void algo::display(){
 }
 
 void algo::fetch(){
-    list<string>::iterator it=l.begin();
-    for(it++;it!=l.end();it++){
+    list<string>::iterator it=next(l.begin());
+    for(++it;it!=l.end();it++){
         string temp_cin;
         cin>>temp_cin;
         if(varib->get_value(*it)=="\0" ){
@@ -66,7 +65,7 @@ void algo::fetch(){
 }
 
 void algo::declare(){
-    list<string>::iterator it=l.begin();
+    list<string>::iterator it=next(l.begin());
     for(it++;it!=l.end();it++){
         string dec="declared";
         varib->set_value(*it,dec);
@@ -109,7 +108,7 @@ void algo::expression(){
     string lhs="",rhs="";
     int flag=0;
 
-    for(auto it=l.begin();it!=l.end();it++){
+    for(auto it=next(l.begin());it!=l.end();it++){
         string exp=*it;
         for(int i=0;i<exp.length();i++){
             if(exp[i]=='='){
@@ -136,7 +135,7 @@ void algo::expression(){
 
 int algo::condition(){
     string con="";
-    list<string>::iterator it=l.begin();
+    list<string>::iterator it=next(l.begin());
     for(it++;it!=l.end();it++){
         string exp=*it;
         for(int i=0;i<exp.length();i++){

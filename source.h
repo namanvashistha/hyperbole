@@ -5,6 +5,7 @@
 #include<fstream>
 #include<list>
 #include<string>
+#include"algo.h"
 using namespace std;
 
 class source{
@@ -70,6 +71,9 @@ bool source::open_file(){
     list<string> l;
     string word="";
     int str_flg=0;
+    int lineNo=2;
+    algo al;
+    l.push_back(al.int_to_string(1));
     for(unsigned int i=0;i< s.length();i++){
         if(s[i]!=' ' && s[i]!=';' && str_flg==0){
             word+=s[i];
@@ -89,6 +93,8 @@ bool source::open_file(){
         if(s[i]==';'){
             lol.push_back(l);
             l.erase(l.begin(),l.end());
+            l.push_back(al.int_to_string(lineNo));
+            lineNo++;
         }
     }
     return true;
@@ -99,9 +105,11 @@ bool source::show_file(){
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;
         list<string>::iterator it;
-        cout<<"\t";
+        int tab=0;
         for(it=tl.begin();it!=tl.end();it++){
             cout<<*it<<" ";
+            if(tab==0) cout<<"\t";;
+            tab++;
         }
         cout<<";"<<endl;
     }
