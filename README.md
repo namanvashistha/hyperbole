@@ -3,8 +3,8 @@
 #### compiler build using C++
 
 ### Prerequisites
-- Install [Code::Blocks](http://www.codeblocks.org/downloads)
-- Open files in [Code::Blocks](http://www.codeblocks.org/downloads) and start contributing
+- Install [Code::Blocks](http://www.codeblocks.org/downloads) or any C++ compiler.
+- Feel free to contribute.
 
 ## Contributing
 
