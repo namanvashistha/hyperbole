@@ -83,7 +83,7 @@ int algo::precedence(string op){
         return 4;
     if(op == "+" || op == "-")
         return 5;
-    if(op == "*" || op == "/")
+    if(op == "*" || op == "/" || op== "%")
         return 6;
     
     return 0;
@@ -94,6 +94,7 @@ int algo::applyOp(int a, int b, string op){
         else if(op == "-") return a - b;
         else if(op == "*") return a * b;
         else if(op == "/") return a / b;
+        else if(op == "%") return a % b;
         else if(op == "&&") return a && b;
         else if(op == "||") return a || b;
         else if(op == "==") return a == b;

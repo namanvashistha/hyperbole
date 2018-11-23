@@ -4,6 +4,7 @@
 #include<list>
 #include<string>
 #include<map>
+#include<stack>
 #include"variable.h"
 #include"keyword.h"
 #include"algo.h"
@@ -15,7 +16,7 @@ class execute
         variable var;
         keyword key;
         algo alg;
-        execute(list<list<string>> lol);
+        execute(list<list<string> > lol);
         void executing();
         void show_memory();
         bool show_file();
@@ -27,10 +28,13 @@ execute::execute(list<list<string> > lol){
 }
 
 void execute::executing(){
+    stack<string> flow;
+    int balance=0;
     list<list<string> >::iterator itr;
-    for (itr=code.begin(); itr != code.end(); itr++){
+    for(itr=code.begin();itr != code.end();itr++){
         list<string>tl=*itr;
-        list<string>::iterator it=next(tl.begin());
+        list<string>::iterator it=tl.begin();
+            advance(it,1);
             alg.l=tl;
             if(*it=="display"){
                 alg.display();
@@ -42,7 +46,22 @@ void execute::executing(){
                 alg.declare();
             }
             else if(*it=="check"){
-                cout<<alg.condition();
+                balance++;
+                alg.condition();
+            }
+            else if(*it=="loop"){
+                advance(it,-1);
+                flow.push(*it);
+                advance(it,1);
+                balance++;
+                if(alg.condition()==0) break;
+            }
+            else if(*it=="end"){
+                int line=(alg.string_to_int(flow.top()))-2;
+                itr=code.begin();
+                advance(itr,line);
+                //flow.pop();
+                balance--;
             }
             else{
                 alg.expression();
