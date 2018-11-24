@@ -9,7 +9,33 @@ using namespace std;
 int main(){
      system("color 0A");
     BEGIN: system("clear");
-
+    printf("\t\t*                                               *\n");
+printf(" -----------------------------------------------------------------------------\n");
+	printf("|                                                                            |\n");
+	printf("|                                                                            |\n");
+	printf("| ######   ######  ######  ######  ######  ######  #      #  ######   ###### |\n");
+	printf("| #        #    #  #       #         #       #     # #    #  #        #      |\n");
+	printf("| #  ####  ######  #####   #####     #       #     #  #   #  #  ####  ###### |\n");
+	printf("| #    #   #  #    #       #         #       #     #   #  #  #    #        # |\n");
+	printf("| ######   #   #   ######  ######    #     ######  #    # #  ######   ###### |\n");
+	printf("|                                                                            |\n");
+	printf(" -----------------------------------------------------------------------------\n");
+ 	printf("\t\t*************************************************\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*        -----------------------------          *\n");
+	printf("\t\t*            WELCOME TO HYPERBOLE               *\n");
+	printf("\t\t*        -----------------------------          *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*    HYPERBOLE is a compiler build using C++    *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*                                    ©hyperbole *\n");
+	printf("\t\t*                                               *\n");
+	printf("\t\t*************************************************\n\n\n");
     cout<<"Enter 'O' to open a file , 'H' to get help or 'E' to exit ";
 
     char ch;
