@@ -20,7 +20,7 @@ int main(){
     switch(ch){
         case 'h':
         case 'H':
-
+            system("color 1F");
             while(1){
                 system("clear");
                 cout<<"HELP\n\n";
