@@ -7,8 +7,11 @@
 #include"execute.h"
 using namespace std;
 int main(){
+     system("color 0A");
     BEGIN: system("clear");
+
     cout<<"Enter 'O' to open a file , 'H' to get help or 'E' to exit ";
+
     char ch;
     cin>>ch;
     string flow="start";
@@ -17,6 +20,7 @@ int main(){
     switch(ch){
         case 'h':
         case 'H':
+
             while(1){
                 system("clear");
                 cout<<"HELP\n\n";
@@ -33,6 +37,7 @@ int main(){
         break;
         case 'o':
         case 'O':
+
             cout<<"\nsource codes\n````````````\n";
             src.list_dir();
             cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
