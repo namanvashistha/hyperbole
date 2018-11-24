@@ -37,7 +37,7 @@ int main(){
         break;
         case 'o':
         case 'O':
-
+            system("color 2F");
             cout<<"\nsource codes\n````````````\n";
             src.list_dir();
             cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
