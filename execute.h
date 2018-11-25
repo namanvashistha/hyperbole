@@ -9,13 +9,14 @@
 #include"keyword.h"
 #include"algo.h"
 
-class execute
-{
+class execute{
     public:
         list<list<string> > code;
         variable var;
         keyword key;
         algo alg;
+        stack<string> flow;
+        int balance;
         execute(list<list<string> > lol);
         void executing();
         void show_memory();
@@ -25,11 +26,10 @@ class execute
 execute::execute(list<list<string> > lol){
     code=lol;
     alg.varib=&var;
+    balance=0;
 }
 
 void execute::executing(){
-    stack<string> flow;
-    int balance=0;
     list<list<string> >::iterator itr;
     for(itr=code.begin();itr != code.end();itr++){
         list<string>tl=*itr;
@@ -50,17 +50,37 @@ void execute::executing(){
                 alg.condition();
             }
             else if(*it=="loop"){
-                advance(it,-1);
-                flow.push(*it);
-                advance(it,1);
                 balance++;
-                if(alg.condition()==0) break;
+                if(alg.condition()){
+                    advance(it,-1);
+                      //  if(*it!=flow.top())
+                            flow.push(*it);
+                    advance(it,1);
+                } 
+                else{
+                    int temp=balance,count=0;
+                    while(balance!=(temp-1)){
+                        advance(itr,1);
+                        list<string>tl=*itr;
+                        auto it=tl.begin();
+                        advance(it,1);
+                        if(*it=="loop" || *it=="check"){
+                            balance++;
+                        }
+                        else if(*it=="end"){
+                            balance--;
+                        }
+                        count++;
+                    }
+                    if(!flow.empty()){
+                        flow.pop();
+                    }
+                }
             }
             else if(*it=="end"){
                 int line=(alg.string_to_int(flow.top()))-2;
                 itr=code.begin();
                 advance(itr,line);
-                //flow.pop();
                 balance--;
             }
             else{

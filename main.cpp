@@ -7,10 +7,12 @@
 #include"execute.h"
 using namespace std;
 int main(){
-     system("color 0A");
+
     BEGIN: system("clear");
+    cout << "\033[1;41m";
+
     printf("\t\t*                                               *\n");
-printf(" -----------------------------------------------------------------------------\n");
+    printf(" -----------------------------------------------------------------------------\n");
 	printf("|                                                                            |\n");
 	printf("|                                                                            |\n");
 	printf("| ######   ######  ######  ######  ######  ######  #      #  ######   ###### |\n");
@@ -37,7 +39,7 @@ printf(" -----------------------------------------------------------------------
 	printf("\t\t*                                               *\n");
 	printf("\t\t*************************************************\n\n\n");
     cout<<"Enter 'O' to open a file , 'H' to get help or 'E' to exit ";
-
+    cout<<"\033[0m";
     char ch;
     cin>>ch;
     string flow="start";
@@ -46,7 +48,6 @@ printf(" -----------------------------------------------------------------------
     switch(ch){
         case 'h':
         case 'H':
-            system("color 1F");
             while(1){
                 system("clear");
                 cout<<"HELP\n\n";
@@ -63,7 +64,6 @@ printf(" -----------------------------------------------------------------------
         break;
         case 'o':
         case 'O':
-            system("color 2F");
             cout<<"\nsource codes\n````````````\n";
             src.list_dir();
             cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
@@ -98,7 +98,6 @@ printf(" -----------------------------------------------------------------------
             execute exe(src.lol);
             exe.executing();
             exe.show_memory();
-
             cout<<"\n\nPress Enter to continue... ";
             cin.get();cin.get();
             src.close_file();
