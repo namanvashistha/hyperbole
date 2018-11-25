@@ -47,7 +47,25 @@ void execute::executing(){
             }
             else if(*it=="check"){
                 balance++;
-                alg.condition();
+                if(!alg.condition()){
+                    int temp=balance,count=0;
+                    while(balance!=(temp-1)){
+                        advance(itr,1);
+                        list<string>tl=*itr;
+                        auto it=tl.begin();
+                        advance(it,1);
+                        if(*it=="check"){
+                            balance++;
+                        }
+                        else if(*it=="checkit"){
+                            balance--;
+                        }
+                        count++;
+                    }
+                }
+            }
+            else if(*it=="checkit"){
+                balance--;
             }
             else if(*it=="loop"){
                 balance++;
@@ -60,8 +78,7 @@ void execute::executing(){
                         if(*it!=flow.top()){
                             flow.push(*it);
                         }
-                    }
-                            
+                    }   
                     advance(it,1);
                 } 
                 else{
@@ -71,10 +88,10 @@ void execute::executing(){
                         list<string>tl=*itr;
                         auto it=tl.begin();
                         advance(it,1);
-                        if(*it=="loop" || *it=="check"){
+                        if(*it=="loop"){
                             balance++;
                         }
-                        else if(*it=="end"){
+                        else if(*it=="loopit"){
                             balance--;
                         }
                         count++;
@@ -84,12 +101,13 @@ void execute::executing(){
                     }
                 }
             }
-            else if(*it=="end"){
+            else if(*it=="loopit"){
                 int line=(alg.string_to_int(flow.top()))-2;
                 itr=code.begin();
                 advance(itr,line);
                 balance--;
             }
+
             else{
                 alg.expression();
             }

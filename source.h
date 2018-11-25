@@ -37,7 +37,7 @@ bool source::list_dir(){
             if(f_name[f_name.size()-1]=='p'){
                 f_name= f_name.substr(0, f_name.size()-4);
                 if(nxt_lin%5==0) cout<<endl;
-                cout<<f_name<<"\t";
+                cout<<f_name<<".hyp"<<"\t";
                 nxt_lin++;
             }
         }
