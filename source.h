@@ -94,6 +94,10 @@ bool source::open_file(){
             lol.push_back(l);
             l.erase(l.begin(),l.end());
             l.push_back(al.int_to_string(lineNo));
+            while(!isalpha(s[i])){
+                i++;
+            }
+            i--;
             lineNo++;
         }
     }
