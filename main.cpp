@@ -9,19 +9,7 @@ using namespace std;
 int main(){
 
     BEGIN: system("clear");
-    cout << "\033[1;41m";
-
-    printf("\t\t*                                               *\n");
-    printf(" -----------------------------------------------------------------------------\n");
-	printf("|                                                                            |\n");
-	printf("|                                                                            |\n");
-	printf("| ######   ######  ######  ######  ######  ######  #      #  ######   ###### |\n");
-	printf("| #        #    #  #       #         #       #     # #    #  #        #      |\n");
-	printf("| #  ####  ######  #####   #####     #       #     #  #   #  #  ####  ###### |\n");
-	printf("| #    #   #  #    #       #         #       #     #   #  #  #    #        # |\n");
-	printf("| ######   #   #   ######  ######    #     ######  #    # #  ######   ###### |\n");
-	printf("|                                                                            |\n");
-	printf(" -----------------------------------------------------------------------------\n");
+    cout << "\033[1;31m";
  	printf("\t\t*************************************************\n");
 	printf("\t\t*                                               *\n");
 	printf("\t\t*                                               *\n");
@@ -38,7 +26,7 @@ int main(){
 	printf("\t\t*                                    ©hyperbole *\n");
 	printf("\t\t*                                               *\n");
 	printf("\t\t*************************************************\n\n\n");
-    cout<<"Enter 'O' to open a file , 'H' to get help or 'E' to exit ";
+    cout<<"\tEnter 'O' to open a file , 'H' to get help or 'E' to exit ";
     cout<<"\033[0m";
     char ch;
     cin>>ch;
@@ -55,7 +43,7 @@ int main(){
                 if(flow!="start"){
                     cout<<"\n"<<flow<<": "<<hlp.show(flow)<<endl;
                 }
-                cout<<"\n\nEnter a keyword from above list to get help OR 'Q' to exit help: ";
+                cout<<"\n\nEnter a keyword from the above list to get help OR 'Q' to exit help: ";
                 cin>>flow;
                 if(flow=="q" || flow=="Q"){
                     goto BEGIN;
@@ -63,14 +51,14 @@ int main(){
             }
         break;
         case 'o':
-        case 'O':
+        case 'O':system("clear");
             cout<<"\nsource codes\n````````````\n";
             src.list_dir();
             cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
             if(flow=="start")
                 cin>>src.filename;
-            FILE:
             src.open_editor();
+            FILE:system("clear");
             while(1){
                 if(!src.open_file()){
                     src.new_file();

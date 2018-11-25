@@ -53,8 +53,15 @@ void execute::executing(){
                 balance++;
                 if(alg.condition()){
                     advance(it,-1);
-                      //  if(*it!=flow.top())
+                    if(flow.empty()){
+                        flow.push(*it);
+                    }
+                    else{
+                        if(*it!=flow.top()){
                             flow.push(*it);
+                        }
+                    }
+                            
                     advance(it,1);
                 } 
                 else{
