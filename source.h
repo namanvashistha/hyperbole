@@ -28,7 +28,8 @@ bool source::new_file(){
 }
 
 bool source::list_dir(){
-   DIR *dir;
+    cout<<"\nsource codes\n````````````\n";
+    DIR *dir;
     struct dirent *ent;
     if ((dir = opendir ("source")) != NULL) {
         int nxt_lin=0;
@@ -45,6 +46,7 @@ bool source::list_dir(){
     } else {
          perror ("");
     }
+    cout<<"\n\nEnter a name from the above list to open OR Enter a new name to create one"<<endl;
 }
 
 bool source::open_editor(){
@@ -106,6 +108,9 @@ bool source::open_file(){
 }
 
 bool source::show_file(){
+    cout<<filename<<".hyp\n````````````\n";
+    cout<<"please go to source/"<<filename<<".hyp and write the code in hyperbole\n\n\n";
+    for(int i=0;i<50;i++) cout<<"`"; cout<<endl;
     list<list<string> >::iterator itr;
     for (itr=lol.begin(); itr != lol.end(); itr++){
         list<string>tl=*itr;
@@ -118,6 +123,9 @@ bool source::show_file(){
         }
         cout<<";"<<endl;
     }
+    cout<<endl;
+    for(int i=0;i<50;i++) cout<<"`";
+    cout<<"\n\nPress 'R' to Refresh,'C' to Compile n Run OR 'Q' to close this file "<<endl;
 }
 
 bool source::write_file(){

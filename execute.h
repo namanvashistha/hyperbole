@@ -56,11 +56,20 @@ void execute::executing(){
                         list<string>tl=*itr;
                         auto it=tl.begin();
                         advance(it,1);
-                        if(*it=="check"){
+                        if(*it=="check" || *it=="otherwise"){
                             check_balance++;
                         }
-                        else if(*it=="checkit"){
+                        else if(*it=="checkit" || *it=="leaveit"){
                             check_balance--;
+                        }
+                    }
+                    advance(itr,1);
+                    if(itr != code.end()){
+                        list<string>tl=*itr;
+                        auto it_oth=tl.begin();
+                        advance(it_oth,1);
+                        if(*it_oth=="otherwise"){
+                            advance(itr,1);
                         }
                     }
                 }
@@ -70,21 +79,22 @@ void execute::executing(){
             }
             else if(*it=="otherwise"){
                 check_balance--;
-                if(!alg.condition()){
-                    int temp=check_balance;
-                    while(check_balance!=(temp-1)){
-                        advance(itr,1);
-                        list<string>tl=*itr;
-                        auto it=tl.begin();
-                        advance(it,1);
-                        if(*it=="check" || *it=="otherwise"){
-                            check_balance++;
-                        }
-                        else if(*it=="checkit" || *it=="leaveit"){
-                            check_balance--;
-                        }
+                int temp=check_balance;
+                while(check_balance!=(temp-1)){
+                    advance(itr,1);
+                    list<string>tl=*itr;
+                    auto it=tl.begin();
+                    advance(it,1);
+                    if(*it=="check" || *it=="otherwise"){
+                        check_balance++;
+                    }
+                    else if(*it=="checkit" || *it=="leaveit"){
+                        check_balance--;
                     }
                 }
+            }
+            else if(*it=="leaveit"){
+                check_balance--;
             }
             else if(*it=="loop"){
                 loop_balance++;
@@ -124,6 +134,12 @@ void execute::executing(){
                 itr=code.begin();
                 advance(itr,line);
                 loop_balance--;
+            }
+            else if(*it=="BEGIN"){
+                
+            }
+            else if(*it=="END"){
+            
             }
 
             else{
