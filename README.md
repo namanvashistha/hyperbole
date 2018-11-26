@@ -1,7 +1,12 @@
 # hyperbole
 
 #### compiler build using C++
+![hyperbole](https://i.imgur.com/Ct2yYvh.png)
+![hyperbole](https://i.imgur.com/MiIQlXN.png)
+![hyperbole](https://i.imgur.com/iAi9Mni.png)
 ![hyperbole](https://i.imgur.com/FOhvYTK.png)
+![hyperbole](https://i.imgur.com/hDSPoCL.png)
+![hyperbole](https://i.imgur.com/A6irx0I.png)
 
 ### Prerequisites
 - Install [Code::Blocks](http://www.codeblocks.org/downloads) or any C++ compiler.
