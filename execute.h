@@ -16,7 +16,8 @@ class execute{
         keyword key;
         algo alg;
         stack<string> flow;
-        int balance;
+        int check_balance;
+        int loop_balance;
         execute(list<list<string> > lol);
         void executing();
         void show_memory();
@@ -26,7 +27,8 @@ class execute{
 execute::execute(list<list<string> > lol){
     code=lol;
     alg.varib=&var;
-    balance=0;
+    loop_balance=0;
+    check_balance=0;
 }
 
 void execute::executing(){
@@ -46,29 +48,46 @@ void execute::executing(){
                 alg.declare();
             }
             else if(*it=="check"){
-                balance++;
+                check_balance++;
                 if(!alg.condition()){
-                    int temp=balance,count=0;
-                    while(balance!=(temp-1)){
+                    int temp=check_balance;
+                    while(check_balance!=(temp-1)){
                         advance(itr,1);
                         list<string>tl=*itr;
                         auto it=tl.begin();
                         advance(it,1);
                         if(*it=="check"){
-                            balance++;
+                            check_balance++;
                         }
                         else if(*it=="checkit"){
-                            balance--;
+                            check_balance--;
                         }
-                        count++;
                     }
                 }
             }
             else if(*it=="checkit"){
-                balance--;
+                check_balance--;
+            }
+            else if(*it=="otherwise"){
+                check_balance--;
+                if(!alg.condition()){
+                    int temp=check_balance;
+                    while(check_balance!=(temp-1)){
+                        advance(itr,1);
+                        list<string>tl=*itr;
+                        auto it=tl.begin();
+                        advance(it,1);
+                        if(*it=="check" || *it=="otherwise"){
+                            check_balance++;
+                        }
+                        else if(*it=="checkit" || *it=="leaveit"){
+                            check_balance--;
+                        }
+                    }
+                }
             }
             else if(*it=="loop"){
-                balance++;
+                loop_balance++;
                 if(alg.condition()){
                     advance(it,-1);
                     if(flow.empty()){
@@ -82,19 +101,18 @@ void execute::executing(){
                     advance(it,1);
                 } 
                 else{
-                    int temp=balance,count=0;
-                    while(balance!=(temp-1)){
+                    int temp=loop_balance;
+                    while(loop_balance!=(temp-1)){
                         advance(itr,1);
                         list<string>tl=*itr;
                         auto it=tl.begin();
                         advance(it,1);
                         if(*it=="loop"){
-                            balance++;
+                            loop_balance++;
                         }
                         else if(*it=="loopit"){
-                            balance--;
+                            loop_balance--;
                         }
-                        count++;
                     }
                     if(!flow.empty()){
                         flow.pop();
@@ -105,7 +123,7 @@ void execute::executing(){
                 int line=(alg.string_to_int(flow.top()))-2;
                 itr=code.begin();
                 advance(itr,line);
-                balance--;
+                loop_balance--;
             }
 
             else{

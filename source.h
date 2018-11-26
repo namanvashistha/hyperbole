@@ -63,6 +63,7 @@ bool source::open_file(){
     file.open("source/"+filename+".hyp");
     if(file.fail()) return false;
     string s="";
+    int cmt_flag=0;
     while(file){
         string p;
         getline(file,p);
