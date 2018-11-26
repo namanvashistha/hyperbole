@@ -78,7 +78,7 @@ bool source::open_file(){
     algo al;
     l.push_back(al.int_to_string(1));
     for(unsigned int i=0;i< s.length();i++){
-        if(s[i]!=' ' && s[i]!=';' && s[i]!=',' && str_flg==0){
+        if(s[i]!=' ' && s[i]!=';' && s[i]!=',' && s[i]!=':' && str_flg==0){
             word+=s[i];
             if(s[i]=='"') str_flg=1;
         }
@@ -93,7 +93,7 @@ bool source::open_file(){
             }
             word="";
         }
-        if(s[i]==';'){
+        if(s[i]==';' || s[i]==':'){
             lol.push_back(l);
             l.erase(l.begin(),l.end());
             l.push_back(al.int_to_string(lineNo));

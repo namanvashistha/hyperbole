@@ -1,0 +1,10 @@
+BEGIN:
+	declare i,n;
+	i=1;
+	display "Enter a number ";
+	fetch n;
+	loop i<=n:
+		display i,nextln;
+		i=i+1;
+	loopit;
+END;
