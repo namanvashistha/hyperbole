@@ -64,13 +64,11 @@ void execute::executing(){
                         }
                     }
                     advance(itr,1);
-                    if(itr != code.end()){
-                        list<string>tl=*itr;
-                        auto it_oth=tl.begin();
-                        advance(it_oth,1);
-                        if(*it_oth=="otherwise"){
-                            advance(itr,1);
-                        }
+                    list<string>tl=*itr;
+                    auto it_oth=tl.begin();
+                    advance(it_oth,1);
+                    if(*it_oth!="otherwise"){
+                        advance(itr,-1);
                     }
                 }
             }

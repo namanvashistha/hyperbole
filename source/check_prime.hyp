@@ -1,19 +1,20 @@
-BEGIN;
+BEGIN:
 	declare n,i,m,flag;
 	m=0; flag=0;  
 	display "Enter the Number to check Prime: ";  
 	fetch n;  
 	m=n/2; i = 2;  
-	loop (i <= m);  
+	loop (i <= m):  
 	  	check (n % i == 0);    
 	    	flag=1;    
 	  	checkit; 
 	  	i=i+1; 
 	loopit;
-	check (flag==0);  
+	check (flag==0):  
 	  	display "Number is Prime." nextln;
 	checkit;
-	check (flag!=0);
+	otherwise:
 	  	display "Number is not a Prime." nextln;
-	checkit;   
+	  	i=100;
+	leaveit;
 END;
