@@ -1,4 +1,0 @@
-display: displays the variable or the string;
-declare: declare a variable;
-fetch: takes the input from the keyboard and stores it into a variable;
-nextln: places curson onto the next line;
