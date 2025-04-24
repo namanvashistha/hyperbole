@@ -16,12 +16,12 @@ The system includes components to handle **source code** (*parsing*), manage **v
 - Feel free to contribute.
 
 ## Chapters
-1. [IDE Shell](01_ide_shell.md)
-2. [Source Code Handler](02_source_code_handler.md)
-3. [Help System](03_help_system.md)
-4. [Execution Engine](04_execution_engine.md)
-5. [Language Logic Unit (ALGO)](05_language_logic_unit__algo_.md)
-6. [Variable Store](06_variable_store.md)
+1. [IDE Shell](docs/01_ide_shell.md)
+2. [Source Code Handler](docs/02_source_code_handler.md)
+3. [Help System](docs/03_help_system.md)
+4. [Execution Engine](docs/04_execution_engine.md)
+5. [Language Logic Unit (ALGO)](docs/05_language_logic_unit__algo_.md)
+6. [Variable Store](docs/06_variable_store.md)
 
 ## Contributing
 
