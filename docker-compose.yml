@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  hyperbole:
+    build: .
+    container_name: hyperbole-web
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
