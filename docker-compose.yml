@@ -8,7 +8,7 @@ services:
     networks:
       - caddy
     labels:
-      caddy: hyperbole.namanvashistha.com
+      caddy: http://hyperbole.namanvashistha.com
       caddy.reverse_proxy: "{{upstreams 8080}}"
 
 networks:
