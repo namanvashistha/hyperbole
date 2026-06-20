@@ -8,6 +8,7 @@
 #include"source.h"
 #include"help.h"
 #include"execute.h"
+#include"explain.h"
 #include"ui.h"
 using namespace std;
 
@@ -114,6 +115,7 @@ int main(){
                 int k = ui::read_key();
                 if(k=='e' || k=='E'){ src.open_editor(); continue; } // edit, then reparse & redraw
                 if(k=='c' || k=='C'){ goto COMPILE; }                // compile & run
+                if(k=='x' || k=='X'){ explain_program(src.lol, src.filename); continue; } // plain-English walkthrough
                 if(k=='?'){ hlp.browse(); continue; } // open help, keep your place
                 if(k=='q' || k=='Q'){ goto BEGIN; }                  // close
                 // R or any other key just refreshes (loop re-parses)

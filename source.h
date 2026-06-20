@@ -367,6 +367,7 @@ bool source::show_file(){
          << "check…checkit  otherwise…leaveit\n" << ui::RESET << "\n";
     cout<<"  "<<ui::key_pill("E", 96,165,250) <<ui::DIM<<" edit    "         <<ui::RESET
         <<     ui::key_pill("C", 52,211,153) <<ui::DIM<<" compile & run    " <<ui::RESET
+        <<     ui::key_pill("X", 192,132,252)<<ui::DIM<<" explain    "       <<ui::RESET
         <<     ui::key_pill("?", 56,189,248) <<ui::DIM<<" help    "          <<ui::RESET
         <<     ui::key_pill("Q", 248,113,113)<<ui::DIM<<" close"             <<ui::RESET<<"\n";
     return true;
