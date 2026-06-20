@@ -1,5 +1,5 @@
 BEGIN:
-	declare n,i,m,flag;
+	declare k,n,i,m,flag;
 	m=0; flag=0;  
 	display "Enter the Number to check Prime: ";  
 	fetch n;  

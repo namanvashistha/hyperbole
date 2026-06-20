@@ -1,0 +1,11 @@
+BEGIN:
+	declare n,i,fact;
+	fact=1; i=1;
+	display "Enter a number: ";
+	fetch n;
+	loop (i<=n):
+		fact=fact*i;
+		i=i+1;
+	loopit;
+	display "Factorial of ",n," is ",fact,nextln;
+END;

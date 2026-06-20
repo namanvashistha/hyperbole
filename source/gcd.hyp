@@ -1,0 +1,11 @@
+BEGIN:
+	declare a,b,t;
+	display "Enter two numbers: ";
+	fetch a,b;
+	loop (b != 0):
+		t=b;
+		b=a%b;
+		a=t;
+	loopit;
+	display "GCD = ",a,nextln;
+END;

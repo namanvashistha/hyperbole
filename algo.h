@@ -37,11 +37,11 @@ void algo::display(){
     for(++it;it!=l.end();it++){
         string dis_string=*it;
         if(varib->get_value(dis_string)!="\0"){
-            cout<<varib->get_value(dis_string);
+            ui::type_out(varib->get_value(dis_string));
         }
         else if(dis_string[0]=='"' && dis_string[dis_string.length()-1]=='"'){
             dis_string=dis_string.substr(1,dis_string.size()-2);
-            cout<<dis_string;
+            ui::type_out(dis_string);
         }
         else if(dis_string=="nextln"){
             cout<<endl;
@@ -103,6 +103,7 @@ int algo::applyOp(int a, int b, string op){
         else if(op == "<=") return a <= b;
         else if(op == ">") return a > b;
         else if(op == "<") return a < b;
+        return 0;
 }
 
 void algo::expression(){
@@ -282,14 +283,16 @@ void algo::replace_substring(string &str,int first,int last,string sub_str){
 }
 
 void algo::show_errors(){
-    cout<<"\n\n";
+    if(errors.empty()) return;
+    cout<<"\n"<<ui::RED<<ui::BOLD<<"  errors:"<<ui::RESET<<ui::RED<<"\n  ";
     for(int i=0;i<errors.length();i++){
         if(errors[i]==';'){
-            cout<<endl;
+            cout<<"\n  ";
             continue;
         }
         cout<<errors[i];
     }
+    cout<<ui::RESET<<"\n";
 }
 
 #endif // ALGO_H

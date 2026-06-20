@@ -3,6 +3,7 @@
 #include<string>
 #include<map>
 #include<iostream>
+#include"ui.h"
 using namespace std;
 
 class variable{
@@ -38,6 +39,7 @@ bool variable::set_value(string &key,string &value){
     }
     else
         variables.insert({key,value});
+    return true;
 }
 
 string variable::get_value(string key){
@@ -60,14 +62,16 @@ string variable::get_value(string key){
 }
 
 void variable::show_errors(){
-    cout<<"\n\n";
+    if(errors.empty()) return;
+    cout<<"\n"<<ui::RED<<ui::BOLD<<"  errors:"<<ui::RESET<<ui::RED<<"\n  ";
     for(int i=0;i<errors.length();i++){
         if(errors[i]==';'){
-            cout<<endl;
+            cout<<"\n  ";
             continue;
         }
         cout<<errors[i];
     }
+    cout<<ui::RESET<<"\n";
 }
 
 #endif // VARIABLE_H

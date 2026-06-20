@@ -1,0 +1,12 @@
+BEGIN:
+	declare n,i,prod;
+	i=1;
+	display "Enter a number: ";
+	fetch n;
+	display "Multiplication table of ",n,nextln;
+	loop (i<=10):
+		prod=n*i;
+		display n," x ",i," = ",prod,nextln;
+		i=i+1;
+	loopit;
+END;

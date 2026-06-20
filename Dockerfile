@@ -3,11 +3,16 @@ FROM ubuntu:22.04
 # Avoid prompts during apt installations
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install g++ and ttyd
+# Install g++, ttyd, vim (the in-app editor) and ncurses-bin (for `clear`)
 RUN apt-get update && apt-get install -y \
     build-essential \
     ttyd \
+    vim \
+    ncurses-bin \
     && rm -rf /var/lib/apt/lists/*
+
+# Default the in-app editor to vim
+ENV EDITOR=vim
 
 # Set working directory
 WORKDIR /app

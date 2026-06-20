@@ -1,0 +1,11 @@
+BEGIN:
+	declare n;
+	display "Countdown from: ";
+	fetch n;
+	loop (n >= 1):
+		display n," ";
+		n=n-1;
+	loopit;
+	display nextln;
+	display "Liftoff!",nextln;
+END;

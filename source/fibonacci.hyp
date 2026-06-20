@@ -1,0 +1,15 @@
+BEGIN:
+	declare n,a,b,c,i;
+	a=0; b=1; i=1;
+	display "How many Fibonacci terms? ";
+	fetch n;
+	display "Series: ";
+	loop (i<=n):
+		display a," ";
+		c=a+b;
+		a=b;
+		b=c;
+		i=i+1;
+	loopit;
+	display nextln;
+END;

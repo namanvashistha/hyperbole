@@ -22,7 +22,7 @@ The Source Code Handler does all this for your Hyperbole code files.
 
 The Source Code Handler, represented by the `source` class in `source.h`, has several key jobs:
 
-1.  **Listing Files (`list_dir`):** Like a librarian showing you a catalog, it looks inside the `source/` folder and lists all the existing `.hyp` files.
+1.  **Picking a File (`pick_file`):** Like a librarian wheeling out a catalog you can flip through, it lists the `.hyp` files in `source/` and lets you choose one with the **arrow keys** (`↑`/`↓`, or `k`/`j`), open it with `Enter`, or back out with `Q`/`Esc`. A `+ new file…` entry at the bottom lets you create one. (An older, type-the-name listing, `list_dir`, is still in the code for reference.)
 2.  **Opening Editor (`open_editor`):** This is like the librarian handing you the book and maybe a magnifying glass or directing you to a quiet reading desk. It tries to open your chosen `.hyp` file using an external text editor (like Sublime Text or Notepad) so you can easily write or modify your code.
 3.  **Reading & Parsing (`open_file`):** This is the core preparation step. The librarian carefully reads the book (your `.hyp` file) line by line, sentence by sentence (or word by word). It translates the raw text into a structured format that the rest of Hyperbole can easily understand. This format is a "list of lists of strings," which we'll call `lol`.
 4.  **Displaying Parsed Code (`show_file`):** After preparing the structured version (`lol`), it can display this organized version back to you within the Hyperbole IDE's terminal window. This shows you how Hyperbole *understood* your code.
@@ -32,52 +32,63 @@ The Source Code Handler, represented by the `source` class in `source.h`, has se
 
 Let's trace the steps when you choose 'O' in the IDE Shell:
 
-1.  **List Available Files:** The IDE Shell first tells the Source Code Handler to show you the available files.
+1.  **Pick a File:** The IDE Shell hands control to the Source Code Handler's interactive picker, which both lists the files *and* reads your choice.
 
     ```c++
     // --- From ide.h (inside case 'O') ---
-    source src; // Create a Source Code Handler object
+    source src;                 // Create a Source Code Handler object
     // ...
-    src.list_dir(); // Ask it to list files in the 'source' directory
+    if(!src.pick_file()){       // Show the list, read arrow-key navigation
+        goto BEGIN;             // Q/Esc -> back to the main menu
+    }
     ```
 
-    The `list_dir` function looks inside the `source` folder:
+    `pick_file` collects the `.hyp` names, then loops: it redraws the list each
+    keypress with the current row highlighted, and reads keys in raw terminal
+    mode so the arrow keys work (including inside the ttyd web terminal):
 
     ```c++
     // --- Simplified from source.h ---
-    bool source::list_dir(){
-        cout<<"\nsource codes\n````````````\n";
-        DIR *dir; // Represents the directory
-        struct dirent *ent; // Represents an entry (file/folder) in the directory
+    bool source::pick_file(){
+        vector<string> files;            // collected .hyp names (see open dir below)
+        // ... opendir("source") and push f_name without the ".hyp" ...
+        sort(files.begin(), files.end());
 
-        if ((dir = opendir ("source")) != NULL) { // Try to open the 'source' directory
-            while ((ent = readdir (dir)) != NULL) { // Read each entry
-                string f_name = ent->d_name; // Get the entry's name
-                // Check if the filename ends with '.hyp' (simplified check)
-                if(f_name.length() > 4 && f_name.substr(f_name.length() - 4) == ".hyp") {
-                    cout << f_name << "\t"; // Print the filename
-                }
-            }
-            closedir (dir); // Close the directory
-        } else {
-            cout << "Error opening source directory!" << endl;
+        int total = (int)files.size() + 1;   // +1 for the "new file" row
+        int sel = 0;
+
+        struct termios oldt, newt;
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+        newt.c_lflag &= ~(ICANON | ECHO);    // read keys immediately, no echo
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+        bool chose = false;
+        while(true){
+            // ... redraw list, marking row `sel` with "❯" ...
+            int c = getchar();
+            if(c == '\033' && getchar()=='['){      // arrow keys: ESC [ A/B
+                int k = getchar();
+                if(k=='A') sel = (sel - 1 + total) % total;   // up
+                else if(k=='B') sel = (sel + 1) % total;      // down
+            } else if(c=='\n' || c=='\r'){ chose = true; break; }
+            else if(c=='k'){ sel = (sel-1+total)%total; }      // vim-style up
+            else if(c=='j'){ sel = (sel+1)%total; }            // vim-style down
+            else if(c=='q' || c=='Q'){ break; }
         }
-        cout<<"\n\nEnter a name ... to open OR ... create one" << endl;
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);  // restore normal terminal mode
+        if(!chose) return false;                  // user backed out
+
+        if(sel == (int)files.size())  cin >> filename;  // "new file" -> ask a name
+        else                          filename = files[sel];
         return true;
     }
     ```
 
-    This shows you a list like `my_program.hyp other_code.hyp` and asks you to type a name.
+    Selecting the `+ new file…` row asks you to type a name; otherwise `filename`
+    is set to the highlighted program (without the `.hyp`, which is added later).
 
-2.  **Get Filename:** The IDE Shell waits for you to enter a filename. Let's say you type `my_program`.
-
-    ```c++
-    // --- From ide.h (inside case 'O') ---
-    cin >> src.filename; // Read the name you typed into the handler's filename variable
-                         // (It automatically adds ".hyp" later)
-    ```
-
-3.  **Open External Editor:** The IDE Shell then asks the Source Code Handler to try and open this file in an external editor.
+2.  **Open External Editor:** The IDE Shell then asks the Source Code Handler to try and open this file in an external editor.
 
     ```c++
     // --- From ide.h (inside case 'O') ---
@@ -101,7 +112,7 @@ Let's trace the steps when you choose 'O' in the IDE Shell:
 
     This attempts to launch Sublime Text, and if that doesn't work (maybe it's not installed), it tries Notepad. This lets you edit `source/my_program.hyp` in a familiar environment.
 
-4.  **Read and Parse the File:** *After* you've potentially edited and saved the file in the external editor, the IDE Shell enters a loop where it reads, shows, and potentially compiles the code. The first step inside this loop is to read and parse the file content.
+3.  **Read and Parse the File:** *After* you've potentially edited and saved the file in the external editor, the IDE Shell enters a loop where it reads, shows, and potentially compiles the code. The first step inside this loop is to read and parse the file content.
 
     ```c++
     // --- From ide.h (inside the FILE loop within case 'O') ---
@@ -143,7 +154,7 @@ Let's trace the steps when you choose 'O' in the IDE Shell:
     ```
     This structured `lol` is stored within the `src` object.
 
-5.  **Show Parsed Code:** The IDE Shell then asks the Source Code Handler to display this structured code.
+4.  **Show Parsed Code:** The IDE Shell then asks the Source Code Handler to display this structured code.
 
     ```c++
     // --- From ide.h (inside the FILE loop) ---

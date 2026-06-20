@@ -8,6 +8,7 @@
 #include"variable.h"
 #include"keyword.h"
 #include"algo.h"
+#include"ui.h"
 
 class execute{
     public:
@@ -150,9 +151,14 @@ void execute::executing(){
 
 void execute::show_memory(){
     map<string,string>::iterator it;
-    cout<<"\nMemory:\n";
+    ui::heading("Memory", ui::MAGENTA);
+    if(var.variables.empty()){
+        cout<<ui::DIM<<"  (no variables)\n"<<ui::RESET;
+        return;
+    }
     for(it=var.variables.begin();it!=var.variables.end();it++){
-        cout<<it->first<<" = "<<it->second<<"\n";
+        cout<<"  "<<ui::CYAN<<ui::BOLD<<it->first<<ui::RESET
+            <<ui::DIM<<" = "<<ui::RESET<<ui::GREEN<<it->second<<ui::RESET<<"\n";
     }
 }
 
@@ -167,6 +173,7 @@ bool execute::show_file(){
         }
         cout<<";"<<endl;
     }
+    return true;
 }
 
 #endif // COMPILE_H

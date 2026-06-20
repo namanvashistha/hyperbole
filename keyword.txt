@@ -1,4 +1,12 @@
-display: displays the variable or the string;
-declare: declare a variable;
-fetch: takes the input from the keyboard and stores it into a variable;
-nextln: places curson onto the next line;
+BEGIN: marks the start of the program;
+END: marks the end of the program;
+declare: declare one or more variables before you use them, e.g. declare a,b;
+display: print text or variables, e.g. display "score is " s nextln;
+fetch: read keyboard input into a variable, e.g. fetch n;
+nextln: move the output to the next line;
+loop: repeat a block while a condition is true, close it with loopit;
+loopit: marks the end of a loop block;
+check: run a block only when a condition is true, close it with checkit;
+checkit: marks the end of a check block;
+otherwise: the block that runs when the matching check was false, close it with leaveit;
+leaveit: marks the end of an otherwise block;

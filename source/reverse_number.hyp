@@ -1,0 +1,12 @@
+BEGIN:
+	declare n,rev,digit;
+	rev=0;
+	display "Enter a number: ";
+	fetch n;
+	loop (n != 0):
+		digit=n%10;
+		rev=rev*10+digit;
+		n=n/10;
+	loopit;
+	display "Reversed number = ",rev,nextln;
+END;
